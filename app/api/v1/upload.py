@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends, UploadFile, File, Form
-from app.services.upload_service import UploadService
+from fastapi                        import APIRouter, Depends, UploadFile, File, Form
+from app.services.upload_service    import UploadService
 
 router = APIRouter()
 

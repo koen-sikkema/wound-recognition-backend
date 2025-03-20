@@ -1,11 +1,11 @@
-from fastapi import UploadFile
-from io import BytesIO
+from fastapi    import UploadFile
+from io         import BytesIO
 
 class UploadService:
     def __init__(self):
         pass
 
-    async def process_image(self, image: UploadFile, notes: str = None):
+    async def process_image(self, image: UploadFile, bodypart: str = None, notes: str = None):
         ''' 
             This function processes an uploaded image and returns some information about it.
         '''

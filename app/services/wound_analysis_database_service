@@ -1,0 +1,23 @@
+from sqlalchemy.orm     import Session
+from fastapi            import FastAPI, Depends
+from sqlalchemy.orm     import Session
+from core.database      import get_database
+from core.models        import WoundAnalysis
+
+
+app = FastAPI()
+
+# Dependency voor de database
+def get_db():
+    db = get_database()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.get("/analysis/{analysis_id}")
+async def get_wound_image(analysis_id: int, db: Session = Depends(get_db)):
+    analysis = db.query(WoundAnalysis).filter(WoundAnalysis.analysis_id == analysis_id).first()
+    if analysis:
+        return analysis
+    return {"message": "Analysis not found"}
