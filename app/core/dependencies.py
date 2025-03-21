@@ -14,7 +14,7 @@ def get_db():
         db.close()
 
 def get_model_service():
-    return ModelService()
+    return MLService()
 
 
 def get_upload_service():
