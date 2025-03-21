@@ -1,4 +1,4 @@
-class ModelService:
+class MLService:
     def __init__(self):
         '''This loads the model and initializes the model service.'''
         pass

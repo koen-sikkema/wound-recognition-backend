@@ -1,5 +1,5 @@
 from fastapi                import FastAPI
-from app.api.v1             import model       
+from app.api.v1             import ML       
 from app.api.v1             import upload     
 from sqlalchemy.orm         import Session
 
