@@ -15,6 +15,8 @@ class UploadService:
            
         print(f"Received image: {image.filename}")
         print(f"Image size: {len(image_data)} bytes")
+        print(f"Body part: {bodypart}")
         print(f"Notes: {notes}")
         
         return {"filename": image.filename, "size": len(image_data), "notes": notes}
+    
