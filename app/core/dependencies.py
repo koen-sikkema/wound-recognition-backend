@@ -1,6 +1,6 @@
 from app.services.ML_service                import MLService
 from app.services.upload_service            import UploadService   
-from app.services.database_service          import DatabaseService
+
 from app.core.database                      import SessionLocal
 from sqlalchemy.orm                         import Session
 
