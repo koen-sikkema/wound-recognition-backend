@@ -1,20 +1,38 @@
 from fastapi                import FastAPI
-from app.api.v1             import ML       
-from app.api.v1             import upload     
-from sqlalchemy.orm         import Session
-from app.core.dependencies  import get_db
-from app.core.database      import engine, SessionLocal 
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import UploadFile, File    
+import os
 
-# initialize the FastAPI app
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:8000",  # Als je backend op deze poort draait
+    "http://127.0.0.1:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Of gebruik ["*"] om alle origin te accepteren
+    allow_credentials=True,
+    allow_methods=["*"],  # Sta alle methoden toe (POST, GET, enz.)
+    allow_headers=["*"],  # Sta alle headers toe
+)
 
 
 @app.get("/")
 def read_root():
     return {"message": "Welkom bij de wondherkenningsapp!"}
 
+@app.post("/upload")
+async def upload_image(file: UploadFile = File(...)):
 
-# Add the routers to the app
-app.include_router(upload.router,  tags=["upload"])
+    os.makedirs("uploads", exist_ok=True)
+
+
+    with open(f"uploads/{file.filename}", "wb") as buffer:
+        buffer.write(await file.read())
+    return {"filename": file.filename}
+
 
 
