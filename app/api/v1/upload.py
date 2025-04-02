@@ -5,14 +5,8 @@ from app.services.upload_service            import UploadService
 router = APIRouter()
 
 @router.post("/upload")
-async def upload_image(
-    image: UploadFile = File(...),
-    notes: str = Form(None),
-    upload_service: UploadService = Depends()
-):
-    ''' 
-        This function uploads an image and returns some information about it.
-    '''
-    return await upload_service.process_image(image, notes=notes)   
 
-
+async def upload_image(file: UploadFile = File(...)):
+    with open(f"uploads/{file.filename}", "wb") as buffer:
+        buffer.write(await file.read())
+    return {"filename": file.filename}

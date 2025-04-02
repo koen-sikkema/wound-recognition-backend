@@ -20,7 +20,5 @@ def get_model_service():
 def get_upload_service():
     return UploadService()
 
-def get_database_setvice():
-    return DatabaseService()  
     
 
