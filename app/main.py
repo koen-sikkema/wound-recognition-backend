@@ -24,7 +24,7 @@ app.add_middleware(
 def read_root():
     return {"message": "Welkom bij de wondherkenningsapp!"}
 
-@app.post("/upload")
+@app.post("/upload/")
 async def upload_image(file: UploadFile = File(...)):
 
     os.makedirs("uploads", exist_ok=True)
