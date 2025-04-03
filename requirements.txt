@@ -5,4 +5,5 @@ sqlalchemy==2.0.7
 sqlalchemy.orm==1.2.10
 python-dotenv
 aiomysql
+python-multipart==0.0.5
 
