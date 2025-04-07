@@ -1,10 +1,13 @@
 from fastapi                import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+import logging
 from fastapi import UploadFile, File    
 import os
 
 app = FastAPI()
 
+logging.basicConfig(level=logging.INFO)
 origins = [
     "http://localhost",
     "http://localhost:8000",  
@@ -22,17 +25,30 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
+
     return {"message": "Welkom bij de wondherkenningsapp!"}
-
 @app.post("/upload/")
+
 async def upload_image(file: UploadFile = File(...)):
-
+    """
+    Upload een afbeelding naar de server.
+    """
     os.makedirs("uploads", exist_ok=True)
+    try:
+        # @todo 
+        # seperation of concerns: save the file to a directory
+        with open(f"uploads/{file.filename}", "wb") as buffer:
+            buffer.write(await file.read())
+        
+        logging.info(f"File {file.filename} uploaded successfully")
+
+        return JSONResponse(content={"message": "File uploaded successfully"}, status_code=200)
+    
+    except Exception as e:
+        logging.error(f"Error uploading file: {e}")
+        return JSONResponse(content={"message": "Upload failed", "error": str(e)}, status_code=500)
 
 
-    with open(f"uploads/{file.filename}", "wb") as buffer:
-        buffer.write(await file.read())
-    return {"filename": file.filename}
 
 
 
