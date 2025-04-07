@@ -1,4 +1,4 @@
-from app.services.upload_service            import UploadService   
+
 
 from app.core.database                      import SessionLocal
 from sqlalchemy.orm                         import Session
@@ -12,8 +12,6 @@ def get_db():
     finally:
         db.close()
 
-def get_upload_service():
-    return UploadService()
 
     
 
