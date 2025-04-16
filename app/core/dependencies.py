@@ -1,5 +1,3 @@
-
-
 from app.core.database                      import SessionLocal
 from sqlalchemy.orm                         import Session
 
