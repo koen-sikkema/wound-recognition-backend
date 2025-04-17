@@ -6,10 +6,11 @@ from fastapi import UploadFile, File
 import os
 import cv2
 from app.services.segment_service import segment_image
-from app.services.crop_and_resize_service import crop_and_resize 
+from app.services.crop_image_service import crop_image 
+from app.core.dependencies import get_db, load_model, get_prediction_labels
 
 app = FastAPI()
-
+model = load_model()
 logging.basicConfig(level=logging.INFO)
 origins = [
     "http://localhost",
@@ -46,12 +47,12 @@ async def upload_image(file: UploadFile = File(...)):
         logging.info(f"File {file.filename} uploaded successfully")
         print(os.path.exists(r'C:\Users\koens\Documents\GitHub\wound-recognition-backend\SAM_weights/sam_vit_b_01ec64.pth'))
 # todo
-        # call naar segment service
-        
-        # get_result(file.filename) 
+        # segment the image using SAM
         image, mask, score = await segment_image(file.filename)
-        crop_and_resized_image = crop_and_resize(image, mask, size=(128, 128))
+        crop_and_resized_image = crop_image(image, mask)
+        
         cv2.imwrite(f"uploads/cropped_resized/{file.filename}", crop_and_resized_image)
+
 
         return JSONResponse(content={"message": "File uploaded successfully"}, status_code=200)
     
@@ -60,11 +61,12 @@ async def upload_image(file: UploadFile = File(...)):
         return JSONResponse(content={"message": "Upload failed", "error": str(e)}, status_code=500)
 
 
-@app.get("/result/")
+@app.get("/predict/")
 async def get_result(filename: str):
     """
     Get the result of the segmentation.
     """
+    # Load the image from the uploads directory
 
     return {"message": "Resultaat van de segmentatie"}
 

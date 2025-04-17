@@ -9,7 +9,14 @@ async def segment_image(filename: str):
     """
     Asynchronously segment an image using the Segment Anything Model (SAM),
     assuming the wound is in the center of the image.
+    The function loads the model, reads the image, and predicts the mask.
+
+    Args:
+        filename (str): The name of the image file to be segmented.
+    Returns:
+        tuple: A tuple containing the original image, the predicted mask, and the score.
     """
+    
     filepath = f"uploads/raw_uploads/{filename}"
     # Load the model
     print("loading model...")
