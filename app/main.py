@@ -7,10 +7,11 @@ import os
 import cv2
 from app.services.segment_service import segment_image
 from app.services.crop_image_service import crop_image 
-from app.core.dependencies import get_db, load_model, get_prediction_labels
+from app.services.preprocess_service import preprocess_image
+from app.core.dependencies import load_model, get_prediction_labels
 
 app = FastAPI()
-model = load_model()
+# model = load_model()
 logging.basicConfig(level=logging.INFO)
 origins = [
     "http://localhost",
@@ -39,20 +40,18 @@ async def upload_image(file: UploadFile = File(...)):
     os.makedirs("uploads", exist_ok=True)
     try:
 
-# @todo 
+        # @todo 
         # seperation of concerns: save the file to a directory
         with open(f"uploads/raw_uploads/{file.filename}", "wb") as buffer:
             buffer.write(await file.read())
+        filename = file.filename
         
         logging.info(f"File {file.filename} uploaded successfully")
-        print(os.path.exists(r'C:\Users\koens\Documents\GitHub\wound-recognition-backend\SAM_weights/sam_vit_b_01ec64.pth'))
-# todo
+       
         # segment the image using SAM
-        image, mask, score = await segment_image(file.filename)
-        crop_and_resized_image = crop_image(image, mask)
-        
-        cv2.imwrite(f"uploads/cropped_resized/{file.filename}", crop_and_resized_image)
-
+        image, mask, score = await segment_image(filename)
+        cropped_image = crop_image(filename,image, mask)
+        preprocessed_image = preprocess_image(filename, cropped_image)
 
         return JSONResponse(content={"message": "File uploaded successfully"}, status_code=200)
     

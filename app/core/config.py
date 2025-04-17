@@ -1,11 +1,11 @@
 
-from dotenv import load_dotenv
-import os
+# from dotenv import load_dotenv
+# import os
 
-# Laad de .env file
+# # Laad de .env file
 
-load_dotenv()
+# load_dotenv()
 
-# Haal de database URL op uit de .env
-DATABASE_URL = os.getenv("DATABASE_URL")
+# # Haal de database URL op uit de .env
+# DATABASE_URL = os.getenv("DATABASE_URL")
 

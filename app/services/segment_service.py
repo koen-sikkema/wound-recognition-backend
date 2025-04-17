@@ -1,9 +1,8 @@
-from segment_anything import SamPredictor, sam_model_registry
 import cv2
 import numpy as np
+from segment_anything import SamPredictor, sam_model_registry
 
-
-sam_weights = r'C:\Users\koens\Documents\GitHub\wound-recognition-backend\SAM_weights/sam_vit_b_01ec64.pth' 
+SAM_WEIGHTS = r'C:\Users\koens\Documents\GitHub\wound-recognition-backend\SAM_weights/sam_vit_b_01ec64.pth' 
 
 async def segment_image(filename: str):
     """
@@ -16,39 +15,33 @@ async def segment_image(filename: str):
     Returns:
         tuple: A tuple containing the original image, the predicted mask, and the score.
     """
-    
+
     filepath = f"uploads/raw_uploads/{filename}"
-    # Load the model
+
     print("loading model...")
-    sam = sam_model_registry["vit_b"](checkpoint=sam_weights)
+    sam = sam_model_registry["vit_b"](checkpoint=SAM_WEIGHTS)
     predictor = SamPredictor(sam)
-    print("model loaded\n loading image...")
-
-    # Read and set the image
+    
+    print("loading image...")
     image = cv2.imread(filepath)
-
     if image is None:
-        print(f"Error: Unable to load image at {filename}")
-    else:
-        print(f"Image loaded successfully: {filename}")
+        raise ValueError(f"Could not load image at {filepath}")
+    print("image loaded")
 
     predictor.set_image(image)
-    print("image loaded\n predicting mask...")
-    # Get image center as point prompt
+
     height, width, _ = image.shape
     input_point = np.array([[width // 2, height // 2]])
-    input_label = np.array([1])  # 1 betekent foreground
+    input_label = np.array([1])
 
-    # Predict the mask using the center point
-    masks, scores, logits = predictor.predict(
+    masks, scores, _ = predictor.predict(
         point_coords=input_point,
         point_labels=input_label,
         multimask_output=False
     )
-    print("mask predicted\n processing mask...")
-    # Optioneel: alleen de beste mask teruggeven
-    mask = masks[0] #numpy.ndarray
+
+    mask = masks[0]  # boolean mask
     score = scores[0]
 
+    print("mask generated")
     return image, mask, score
-

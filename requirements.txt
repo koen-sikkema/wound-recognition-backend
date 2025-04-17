@@ -1,3 +1,4 @@
+tensorflow==2.10.0
 fastapi==0.95.0
 numpy<2.0
 uvicorn==0.18.2
@@ -8,10 +9,8 @@ python-dotenv
 aiomysql
 python-multipart==0.0.5
 git+https://github.com/facebookresearch/segment-anything.git
-torch==1.13.1
-torchvision==0.14.1
-torchaudio==0.13.1
 opencv-python
+pandas
 
 
 

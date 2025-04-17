@@ -1,17 +1,34 @@
 import numpy as np
-from PIL import Image
+import cv2
 
-def preprocess_image(image: Image.Image, size=(128, 128)) -> np.ndarray:
+def preprocess_image(filename: str, image: np.ndarray, size=(128, 128)) -> np.ndarray:
     """
     preprocess_image: Resize and normalize an image for CNN input.
     The image is resized to the specified size and normalized to the range [0, 1].
     The image is reshaped to include a batch dimension.
-    Args:
-        image (Image.Image): The input image to preprocess.
-        size (tuple): The target size for the image (height, width). Default is (128, 128).
-    Returns:
+    args:
+        filename (str): The name of the image file.
+        image (np.ndarray): The image to preprocess.
+        size (tuple): The target size for resizing the image.
+    returns:
         np.ndarray: The preprocessed image ready for CNN input.
     """
-    image = image.resize(size)  # als het al gesized is, hoeft dit niet
-    image = np.array(image) / 255.0
-    return image.reshape((1, size[0], size[1], 3))
+
+    print(f"Preprocessing image: {image.shape} -> {size}")
+    
+    if image.shape[:2] != size:
+        print(f"Resizing image from {image.shape[:2]} to {size}")
+        image_resized = cv2.resize(image, size)
+    else:
+        image_resized = image
+
+    image_normalized = image_resized / 255.0
+    print("Image normalized")
+
+    save_path = f"uploads/preprocessed/prepro_{filename}"
+    cv2.imwrite(save_path, (image_resized).astype(np.uint8))  # save RGB image, not normalized
+    print(f"Saved preprocessed image to {save_path}")
+
+    return image_normalized.reshape((1, size[0], size[1], 3))
+
+
