@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
-from segment_anything import SamPredictor, sam_model_registry
 
-SAM_WEIGHTS = r'C:\Users\koens\Documents\GitHub\wound-recognition-backend\SAM_weights/sam_vit_b_01ec64.pth' 
+from app.core.constants import Constants   
+
 
 async def segment_image(filename: str):
     """
@@ -17,10 +17,6 @@ async def segment_image(filename: str):
     """
 
     filepath = f"uploads/raw_uploads/{filename}"
-
-    print("loading model...")
-    sam = sam_model_registry["vit_b"](checkpoint=SAM_WEIGHTS)
-    predictor = SamPredictor(sam)
     
     print("loading image...")
     image = cv2.imread(filepath)

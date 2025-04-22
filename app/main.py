@@ -8,10 +8,17 @@ import cv2
 from app.services.segment_service import segment_image
 from app.services.crop_image_service import crop_image 
 from app.services.preprocess_service import preprocess_image
-from app.core.dependencies import load_model, get_prediction_labels
-
+from app.core.constants import load_model, get_prediction_labels
+from app.core.model_manager import ModelManager
+from app.core.constants import BEST_CNN_PATH, SAM_weights, SAM_TYPE_VIT_B
 app = FastAPI()
-# model = load_model()
+def main():
+    manager = ModelManager()
+    manager.initialize_models(
+        keras_model_path= BEST_CNN_PATH,
+        sam_checkpoint_path=SAM_weights ,
+        sam_model_type=SAM_TYPE_VIT_B
+    )
 logging.basicConfig(level=logging.INFO)
 origins = [
     "http://localhost",
@@ -65,7 +72,7 @@ async def get_result(filename: str):
     """
     Get the result of the segmentation.
     """
-    # Load the image from the uploads directory
+    
 
     return {"message": "Resultaat van de segmentatie"}
 

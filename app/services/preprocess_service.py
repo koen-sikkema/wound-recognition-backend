@@ -1,7 +1,8 @@
 import numpy as np
 import cv2
 
-def preprocess_image(filename: str, image: np.ndarray, size=(128, 128)) -> np.ndarray:
+
+def preprocess_image(filename: str, image: np.ndarray, size) -> np.ndarray:
     """
     preprocess_image: Resize and normalize an image for CNN input.
     The image is resized to the specified size and normalized to the range [0, 1].
