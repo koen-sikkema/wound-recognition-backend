@@ -2,9 +2,8 @@
 import logging
 import os
 import cv2
-from app.services.image_pipeline.image_segment_pipeline         import segment_image
-from app.services.image_pipeline.image_crop_pipeline        import crop_image 
-from app.services.image_pipeline.Image_preprocess_pipeline  import preprocess_image
+from app.services.image_process_service import process_image
+from app.core.store_result      import get_result
 from app.core.constants         import load_model, get_prediction_labels
 from app.core.model_manager     import ModelManager
 from app.core.constants         import UPLOAD_DIR, BEST_CNN_PATH, SAM_WEIGHTS, SAM_TYPE_VIT_B, MODEL_MANAGER
@@ -48,7 +47,7 @@ def read_root():
 @app.post("/upload/")
 async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = File(...), ):
     """
-    Upload een bestand, stuur een snelle status terug en verwerk de afbeelding op de achtergrond.
+    Upload a file, process it in the background, and return a response immediately.
     """
     os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -59,8 +58,7 @@ async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = Fil
         
         logging.info(f"File {file.filename} uploaded successfully")
 
-        # Start achtergrondtaak voor verdere verwerking
-        background_tasks.add_task(, file.filename)
+        background_tasks.add_task(process_image, file.filename)
         
         # Geef meteen een successtatus terug
         return JSONResponse(content={"message": "File uploaded successfully, processing in background"}, status_code=200)
@@ -69,13 +67,16 @@ async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = Fil
         logging.error(f"Error uploading file: {e}", exc_info=True)
         return JSONResponse(content={"message": "Upload failed", "error": str(e)}, status_code=500)
 
-
 @app.get("/predict/")
-async def get_result(filename: str):
-    """
-    Get the result of the segmentation.
-    """
-    
-    return {"message": "Resultaat van de segmentatie"}
+async def get_result_route(filename: str):
+    result = get_result(filename)
+    if result:
+        return {
+            "filename": filename,
+            "label": result["label"],
+            "confidence": result["score"]
+        }
+    return JSONResponse(status_code=202, content={"message": "Resultaat nog niet beschikbaar"})
+
 
 
