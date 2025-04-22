@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from app.core.constants import Paths, ModelManager
+from app.core.constants import Paths, ModelHandler
 
 async def segment_image(filename: str):
     """
@@ -22,7 +22,7 @@ async def segment_image(filename: str):
         raise ValueError(f"Could not load image at {filepath}")
     print("image loaded")
 
-    predictor = ModelManager.MODEL_MANAGER.load_sam_model()
+    predictor = ModelHandler.MODEL_MANAGER.load_sam_model()
     predictor.set_image(image)
 
     height, width, _ = image.shape

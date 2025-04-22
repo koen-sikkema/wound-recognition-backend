@@ -3,8 +3,8 @@ import logging
 import os
 import cv2
 from app.services.image_process_service import process_image_to_result
+from app.core.model_manager import ModelManager
 from app.core.store_result      import get_result
-from app.core.constants         import load_model, get_prediction_labels
 from app.core.constants         import Paths,  Config, ModelHandler
 from fastapi                    import FastAPI, BackgroundTasks, UploadFile, File 
 from fastapi.middleware.cors    import CORSMiddleware
@@ -17,6 +17,8 @@ app = FastAPI()
 @app.on_event("startup")
 async def startup_event():
     """ Load models during app startup """
+
+    MODEL_MANAGER = ModelManager()
     ModelHandler.MODEL_MANAGER.initialize_model(
         keras_model_path=Paths.BEST_CNN_PATH,
         sam_checkpoint_path=Paths.SAM_WEIGHTS,

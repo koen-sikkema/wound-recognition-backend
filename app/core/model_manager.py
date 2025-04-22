@@ -11,7 +11,7 @@ class ModelManager:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(ModelManager, cls).__new__(cls)
-            cls._instance._intialized = False
+            cls._instance._initialized = False
         return cls._instance
     
     def initialize_model(self, keras_model_path, sam_checkpoint_path, sam_model_type):
