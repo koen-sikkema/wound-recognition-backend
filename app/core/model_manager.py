@@ -36,3 +36,5 @@ class ModelManager:
         sam = sam_model_registry[SAM_TYPE_VIT_B](checkpoint=SAM_WEIGHTS)
         sam.to(device="cuda" if torch.cuda.is_available() else "cpu")
         return SamPredictor(sam)
+    
+

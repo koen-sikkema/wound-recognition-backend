@@ -5,16 +5,16 @@ import numpy as np
 from app.core.constants import LABELS
 import cv2
 import os
-from app.core.constants import Constants
+from app.core.constants import MODEL_MANAGER
 
 async def predict_cnn(image: np.ndarray) -> str:
 # Load the model once when the module is imported
 
 
-    pred = model.predict(image)
+    pred = MODEL_MANAGER.load_keras_model().predict(image)
     predicted_idx = np.argmax(pred, axis=1)[0]
     
-    predicted_class = Constants.LABELS[predicted_idx]
+    predicted_class = LABELS[predicted_idx]
     confidence_score = np.max(pred, axis=1)[0]
 
     return predicted_class, confidence_score

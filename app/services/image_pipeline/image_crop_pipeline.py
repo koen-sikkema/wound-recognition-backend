@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-from app.core.constants import PREPROCESS_SIZE, UPLOADS_PREPROCESSED
+from app.core.constants import  UPLOADS_PREPROCESSED
 
 def crop_image(filename: str, image: np.ndarray, mask: np.ndarray) -> np.ndarray:
     """

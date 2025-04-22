@@ -4,6 +4,7 @@ from pathlib                                import Path
 from fastapi                                import Depends
 from app.core.labels                        import get_prediction_labels
 from tensorflow.keras.models                import load_model
+from app.core.model_manager                 import ModelManager
 import pandas as pd
 
 # def get_db():
@@ -20,6 +21,7 @@ class Config:
     LABELS = get_prediction_labels()
     SAM_WEIGHTS = r'C:\Users\koens\Documents\GitHub\wound-recognition-backend\SAM_weights/sam_vit_b_01ec64.pth' 
     SAM_TYPE_VIT_B = "vit_b"
+    MODEL_MANAGER = ModelManager()
 
 class Paths:
     """
