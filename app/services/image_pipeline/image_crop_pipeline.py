@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-from app.core.constants import  UPLOADS_PREPROCESSED
+from app.core.constants import  Paths
 
 def crop_image(filename: str, image: np.ndarray, mask: np.ndarray) -> np.ndarray:
     """
@@ -24,7 +24,7 @@ def crop_image(filename: str, image: np.ndarray, mask: np.ndarray) -> np.ndarray
     # Crop original image based on mask bounding box
     cropped = image[y_min:y_max+1, x_min:x_max+1]
 
-    save_path = f"{UPLOADS_PREPROCESSED}/{filename}"
+    save_path = f"{Paths.UPLOADS_PREPROCESSED}/{filename}"
     print(f"saving cropped...")
     cv2.imwrite(save_path, cropped)
     return cropped

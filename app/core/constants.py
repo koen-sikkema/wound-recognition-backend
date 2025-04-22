@@ -1,10 +1,8 @@
-# from app.core.database                      import SessionLocal
+
 from sqlalchemy.orm                         import Session
 from pathlib                                import Path
 from fastapi                                import Depends
-from app.core.labels                        import get_prediction_labels
 from tensorflow.keras.models                import load_model
-from app.core.model_manager                 import ModelManager
 import pandas as pd
 
 # def get_db():
@@ -13,15 +11,10 @@ import pandas as pd
 #         yield db
 #     finally:
 #         db.close()
-class Config:
-    """
-    A class to hold constants used in the application.
-    """
-    PREPROCESS_SIZE = (128, 128)
-    LABELS = get_prediction_labels()
-    SAM_WEIGHTS = r'C:\Users\koens\Documents\GitHub\wound-recognition-backend\SAM_weights/sam_vit_b_01ec64.pth' 
-    SAM_TYPE_VIT_B = "vit_b"
-    MODEL_MANAGER = ModelManager()
+def get_prediction_labels():
+    pandas_df = pd.read_csv(Paths.LABELS_CSV)
+    return pandas_df["Class"].tolist()
+
 
 class Paths:
     """
@@ -36,6 +29,23 @@ class Paths:
     UPLOADS_MASKED = UPLOADS_DIR / "masked"
     UPLOADS_RAW = UPLOADS_DIR / "raw"
     UPLOADS_PREPROCESSED = UPLOADS_DIR / "preprocessed"
+    SAM_WEIGHTS = r'C:\Users\koens\Documents\GitHub\wound-recognition-backend\SAM_weights/sam_vit_b_01ec64.pth' 
+
+class Config:
+    """
+    A class to hold constants used in the application.
+    """
+    PREPROCESS_SIZE = (128, 128)
+    LABELS = get_prediction_labels()
+    SAM_TYPE_VIT_B = "vit_b"
+ 
+
+class ModelHandler:
+    '''seperate class for model manager'''
+    # Import here to avoid circular import issues
+    from app.core.model_manager                 import ModelManager
+    MODEL_MANAGER = ModelManager()
+
 
 
 

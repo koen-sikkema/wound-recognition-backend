@@ -3,7 +3,7 @@ import tensorflow as tf
 import torch
 from tensorflow.keras.models import load_model
 from segment_anything import SamPredictor, sam_model_registry
-from app.core.constants import BEST_CNN_PATH, SAM_WEIGHTS, SAM_TYPE_VIT_B
+from app.core.constants import Paths, Config
 
 class ModelManager:
     _instance = None # Singleton instance
@@ -26,14 +26,14 @@ class ModelManager:
         Loads a TensorFlow Keras model from the given file path.
         """
         print("loading best cnn...")
-        return tf.keras.models.load_model(BEST_CNN_PATH, compile=False)
+        return tf.keras.models.load_model(Paths.BEST_CNN_PATH, compile=False)
     
     def load_sam_model(self):
         """
         Loads a SAM model from the given file path.
         """
         print("loading sam...")
-        sam = sam_model_registry[SAM_TYPE_VIT_B](checkpoint=SAM_WEIGHTS)
+        sam = sam_model_registry[Config.SAM_TYPE_VIT_B](checkpoint=Paths.SAM_WEIGHTS)
         sam.to(device="cuda" if torch.cuda.is_available() else "cpu")
         return SamPredictor(sam)
     

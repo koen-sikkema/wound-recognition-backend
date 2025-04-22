@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from app.core.constants import SAM_WEIGHTS, SAM_TYPE_VIT_B, MANAGER
+from app.core.constants import Paths, ModelManager
 
 async def segment_image(filename: str):
     """
@@ -14,7 +14,7 @@ async def segment_image(filename: str):
         tuple: A tuple containing the original image, the predicted mask, and the score.
     """
 
-    filepath = f"uploads/raw_uploads/{filename}"
+    filepath = f"{Paths.UPLOADS_RAW}/{filename}"
     
     print("loading image...")
     image = cv2.imread(filepath)
@@ -22,7 +22,7 @@ async def segment_image(filename: str):
         raise ValueError(f"Could not load image at {filepath}")
     print("image loaded")
 
-    predictor = MANAGER.load_sam_model()
+    predictor = ModelManager.MODEL_MANAGER.load_sam_model()
     predictor.set_image(image)
 
     height, width, _ = image.shape

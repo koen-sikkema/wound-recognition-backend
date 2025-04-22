@@ -2,25 +2,25 @@
 import logging
 import os
 import cv2
-from app.services.image_process_service import process_image
+from app.services.image_process_service import process_image_to_result
 from app.core.store_result      import get_result
 from app.core.constants         import load_model, get_prediction_labels
-from app.core.model_manager     import ModelManager
-from app.core.constants         import UPLOAD_DIR, BEST_CNN_PATH, SAM_WEIGHTS, SAM_TYPE_VIT_B, MODEL_MANAGER
-from fastapi                    import FastAPI, BackgroundTasks,UploadFile, File 
+from app.core.constants         import Paths,  Config, ModelHandler
+from fastapi                    import FastAPI, BackgroundTasks, UploadFile, File 
 from fastapi.middleware.cors    import CORSMiddleware
 from fastapi.responses          import JSONResponse
 
 
 app = FastAPI()
 
+
 @app.on_event("startup")
 async def startup_event():
     """ Load models during app startup """
-    MODEL_MANAGER.initialize_models(
-        keras_model_path=BEST_CNN_PATH,
-        sam_checkpoint_path=SAM_WEIGHTS,
-        sam_model_type=SAM_TYPE_VIT_B
+    ModelHandler.MODEL_MANAGER.initialize_model(
+        keras_model_path=Paths.BEST_CNN_PATH,
+        sam_checkpoint_path=Paths.SAM_WEIGHTS,
+        sam_model_type=Config.SAM_TYPE_VIT_B
     )
     logging.info("Models initialized successfully.")
 
@@ -49,16 +49,16 @@ async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = Fil
     """
     Upload a file, process it in the background, and return a response immediately.
     """
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    os.makedirs(Paths.UPLOAD_DIR, exist_ok=True)
 
     try:
         # Sla het bestand op
-        with open(f"{UPLOAD_DIR}/{file.filename}", "wb") as buffer:
+        with open(f"{Paths.UPLOAD_DIR}/{file.filename}", "wb") as buffer:
             buffer.write(await file.read())
         
         logging.info(f"File {file.filename} uploaded successfully")
 
-        background_tasks.add_task(process_image, file.filename)
+        background_tasks.add_task(process_image_to_result, file.filename)
         
         # Geef meteen een successtatus terug
         return JSONResponse(content={"message": "File uploaded successfully, processing in background"}, status_code=200)

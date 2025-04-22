@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from app.core.constants import Paths
 
 
 def preprocess_image(filename: str, image: np.ndarray, size) -> np.ndarray:
@@ -26,7 +27,7 @@ def preprocess_image(filename: str, image: np.ndarray, size) -> np.ndarray:
     image_normalized = image_resized / 255.0
     print("Image normalized")
 
-    save_path = f"uploads/preprocessed/prepro_{filename}"
+    save_path = f"{Paths.UPLOADS_PREPROCESSED}/{filename}"
     cv2.imwrite(save_path, (image_resized).astype(np.uint8))  # save RGB image, not normalized
     print(f"Saved preprocessed image to {save_path}")
 
