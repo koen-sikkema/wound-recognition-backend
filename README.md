@@ -2,7 +2,7 @@ before starting the server please install requirements:
 
 ```pip install -r /path/to/requirements.txt``` 
 
-pip install -r requirements.txt
+pip install -r requirements.txt 
 
 To start the server use:
 ```python -m uvicorn app.main:app --reload```

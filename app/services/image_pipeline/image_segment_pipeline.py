@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from app.core.constants import Paths, ModelHandler
 
-async def segment_image(filename: str):
+def segment_image(filename: str):
     """
     Asynchronously segment an image using the Segment Anything Model (SAM),
     assuming the wound is in the center of the image.
