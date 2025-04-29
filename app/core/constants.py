@@ -11,6 +11,7 @@ import pandas as pd
 #         yield db
 #     finally:
 #         db.close()
+
 def get_prediction_labels():
     pandas_df = pd.read_csv(Paths.LABELS_CSV)
     return pandas_df["Class"].tolist()
