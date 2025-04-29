@@ -1,7 +1,7 @@
 
 import logging
 import os
-import cv2
+from app.schemas.prediction import PredictionResult
 from app.services.image_result_service import process_image_to_result
 from app.core.model_manager import ModelManager
 from app.core.store_result      import get_result
@@ -26,11 +26,7 @@ async def startup_event():
 
 
 logging.basicConfig(level=logging.INFO)
-origins = [
-    "http://localhost",
-    "http://localhost:8000",  
-    "http://127.0.0.1:8000",
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -67,16 +63,12 @@ async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = Fil
         logging.error(f"Error uploading file: {e}", exc_info=True)
         return JSONResponse(content={"message": "Upload failed", "error": str(e)}, status_code=500)
 
-@app.get("/predict/")
+@app.get("/predict/", response_model=PredictionResult, responses={202: {"description": "Result not yet available"}})
 async def get_result_route(filename: str):
     result = get_result(filename)
     if result:
-        return {
-            "filename": filename,
-            "label": result["label"],
-            "confidence": result["score"]
-        }
-    return JSONResponse(status_code=202, content={"message": "Resultaat nog niet beschikbaar"})
+        return result
+    return JSONResponse(status_code=202, content={"message": "Result not yet available"})
 
 
 
