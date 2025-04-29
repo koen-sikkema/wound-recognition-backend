@@ -13,7 +13,7 @@ def process_image_to_result(filename):
     try:
         # Preprocess
         image_path = f"{Paths.UPLOADS_RAW}/{filename}"
-        preprocessed_image, img = preprocess_image(image_path, Config.PREPROCESS_SIZE) 
+        preprocessed_image, img = preprocess_image(image_path, Config.PREPROCESS_SIZE, filename) 
 
         # predict 
         predicted_class, confidence_score = model_predict(preprocessed_image, filename)
