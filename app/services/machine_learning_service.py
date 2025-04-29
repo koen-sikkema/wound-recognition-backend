@@ -1,14 +1,12 @@
-# load model cnn
-# from tensorflow.keras.models import load_model
+
 from tensorflow.keras.models import load_model  
 import numpy as np
 from app.core.constants import Config, ModelHandler
-import cv2
-import os
-
 
 def model_predict(image: np.ndarray, filename: str) -> str:
-    # Load the model once when the module is imported
+    """ 
+    Predict the class of the image using the pre-trained model.
+    """
 
     pred = ModelHandler.MODEL_MANAGER.load_keras_model().predict(image)
     predicted_idx = np.argmax(pred, axis=1)[0]

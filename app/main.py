@@ -62,7 +62,7 @@ async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = Fil
 
         background_tasks.add_task(process_image_to_result, file.filename)
         
-        # Geef meteen een successtatus terug
+        # give status code 200 to indicate success
         return JSONResponse(content={"message": "File uploaded successfully, processing in background"}, status_code=200)
     
     except Exception as e:
