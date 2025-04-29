@@ -21,8 +21,6 @@ async def startup_event():
     MODEL_MANAGER = ModelManager()
     ModelHandler.MODEL_MANAGER.initialize_model(
         keras_model_path=Paths.BEST_CNN_PATH,
-        sam_checkpoint_path=Paths.SAM_WEIGHTS,
-        sam_model_type=Config.SAM_TYPE_VIT_B
     )
     logging.info("Models initialized successfully.")
 

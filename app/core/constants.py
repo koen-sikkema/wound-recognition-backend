@@ -24,13 +24,12 @@ class Paths:
     BASE_DIR = Path(__file__).resolve().parent.parent
     UPLOADS_DIR = BASE_DIR / "uploads"
     MODEL_DIR = BASE_DIR / "ml-model"
-    SAM_WEIGHTS = MODEL_DIR / "sam_vit_b_01ec64.pth"
     BEST_CNN_PATH = MODEL_DIR / "best_cnn.h5"
     LABELS_CSV = MODEL_DIR / "labels_cnn.csv"
     UPLOADS_MASKED = UPLOADS_DIR / "masked"
     UPLOADS_RAW = UPLOADS_DIR / "raw"
     UPLOADS_PREPROCESSED = UPLOADS_DIR / "preprocessed"
-    SAM_WEIGHTS = r'C:\Users\koens\Documents\GitHub\wound-recognition-backend\SAM_weights/sam_vit_b_01ec64.pth' 
+
 
 class Config:
     """
