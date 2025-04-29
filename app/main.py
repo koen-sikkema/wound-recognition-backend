@@ -2,7 +2,7 @@
 import logging
 import os
 import cv2
-from app.services.image_process_service import process_image_to_result
+from app.services.image_result_service import process_image_to_result
 from app.core.model_manager import ModelManager
 from app.core.store_result      import get_result
 from app.core.constants         import Paths,  Config, ModelHandler
