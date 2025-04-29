@@ -51,11 +51,11 @@ async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = Fil
     """
     Upload a file, process it in the background, and return a response immediately.
     """
-    os.makedirs(Paths.UPLOADS_DIR, exist_ok=True)
+    os.makedirs(Paths.UPLOADS_RAW, exist_ok=True)
 
     try:
         # Sla het bestand op
-        with open(f"{Paths.UPLOADS_DIR}/{file.filename}", "wb") as buffer:
+        with open(f"{Paths.UPLOADS_RAW}/{file.filename}", "wb") as buffer:
             buffer.write(await file.read())
         
         logging.info(f"File {file.filename} uploaded successfully")
