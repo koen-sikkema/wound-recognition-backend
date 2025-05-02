@@ -13,7 +13,7 @@ import pandas as pd
 #         db.close()
 
 def get_prediction_labels():
-    pandas_df = pd.read_csv(Paths.LABELS_CSV)
+    pandas_df = pd.read_csv(Paths.LABELS_CSV_NL)
     return pandas_df["Class"].tolist()
 
 
@@ -25,7 +25,8 @@ class Paths:
     UPLOADS_DIR = BASE_DIR / "uploads"
     MODEL_DIR = BASE_DIR / "ml-model"
     BEST_CNN_PATH = MODEL_DIR / "best_cnn.h5"
-    LABELS_CSV = MODEL_DIR / "labels_cnn.csv"
+    LABELS_CSV_ENG = MODEL_DIR / "labels_cnn.csv"
+    LABELS_CSV_NL = MODEL_DIR / "labels_cnn_nl.csv"
     UPLOADS_MASKED = UPLOADS_DIR / "masked"
     UPLOADS_RAW = UPLOADS_DIR / "raw"
     UPLOADS_PREPROCESSED = UPLOADS_DIR / "preprocessed"
