@@ -48,9 +48,9 @@ async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = Fil
     os.makedirs(Paths.UPLOADS_RAW, exist_ok=True)
 
     try:
-        # Sla het bestand op
-        with open(f"{Paths.UPLOADS_RAW}/{file.filename}", "wb") as buffer:
-            buffer.write(await file.read())
+        # This line has been commented out to avoid saving the file to disk. 
+        # with open(f"{Paths.UPLOADS_RAW}/{file.filename}", "wb") as buffer:
+        #     buffer.write(await file.read())
         
         logging.info(f"File {file.filename} uploaded successfully")
 

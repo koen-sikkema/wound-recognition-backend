@@ -27,8 +27,8 @@ def preprocess_image(image_path, target_size, filename):
     img_to_save = (img_array * 255).astype(np.uint8)  # terugschalen
     img_pil = Image.fromarray(img_to_save)
     
-    # Pad de save-bestemming aan zoals je wilt
-    save_path = f"{Paths.UPLOADS_PREPROCESSED}/{filename}"
-    img_pil.save(save_path)
+    
+    # save_path = f"{Paths.UPLOADS_PREPROCESSED}/{filename}"
+    # img_pil.save(save_path)
 
     return np.expand_dims(img_array, axis=0), img
