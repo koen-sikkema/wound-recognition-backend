@@ -1,22 +1,25 @@
 
-from app.services.preprocess_service import  preprocess_image
 from app.core.store_result import store_result
 from app.core.constants import Paths, Config
 from app.services.machine_learning_service import model_predict
+from app.services.image_pipeline.image_preprocess_pipeline import preprocess_image
+from app.services.image_pipeline.image_segment_pipeline import segment_image
+from app.services.image_pipeline.image_crop_pipeline import crop_and_resize_image
 
 def process_image_to_result(filename):
     """
     Prosess the image to get the result.
-    This function uses the original preprocessing method (Without sam).
-    It loads the image, preprocesses it, and predicts the class using the model.
-    """
+    """ 
     try:
         # Preprocess
-        image_path = f"{Paths.UPLOADS_RAW}/{filename}"
-        preprocessed_image, img = preprocess_image(image_path, Config.PREPROCESS_SIZE, filename) 
+        segmented_image, mask, score = segment_image(filename) 
 
+        # Hier ben je bezig met de segmentatie van de afbeelding
+
+        cropped_image, image_path = crop_and_resize_image(filename, segmented_image, mask)
         # predict 
-        predicted_class, confidence_score = model_predict(preprocessed_image, filename)
+        preprocessed_image = preprocess_image(image_path, target_size=Config.PREPROCESS_SIZE)
+        predicted_class, confidence_score = model_predict(preprocessed_image)
         store_result(filename, predicted_class, confidence_score)
         print(f"Predicted class: {predicted_class}, Confidence score: {confidence_score}")
         

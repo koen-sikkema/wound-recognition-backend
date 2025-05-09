@@ -5,12 +5,6 @@ from fastapi                                import Depends
 from tensorflow.keras.models                import load_model
 import pandas as pd
 
-# def get_db():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#     finally:
-#         db.close()
 
 def get_prediction_labels():
     pandas_df = pd.read_csv(Paths.LABELS_CSV_NL)
@@ -30,6 +24,7 @@ class Paths:
     UPLOADS_MASKED = UPLOADS_DIR / "masked"
     UPLOADS_RAW = UPLOADS_DIR / "raw"
     UPLOADS_PREPROCESSED = UPLOADS_DIR / "preprocessed"
+    SAM_WEIGHTS = BASE_DIR / "SAM_weights" / "sam_vit_b_01ec64.pth" 
 
 
 class Config:
@@ -44,7 +39,7 @@ class Config:
 class ModelHandler:
     '''seperate class for model manager'''
     # Import here to avoid circular import issues
-    from app.core.model_manager                 import ModelManager
+    from app.core.model_manager import ModelManager
     MODEL_MANAGER = ModelManager()
 
 

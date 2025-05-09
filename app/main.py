@@ -1,6 +1,7 @@
 
 import logging
 import os
+import shutil
 from app.schemas.prediction import PredictionResult
 from app.services.image_result_service import process_image_to_result
 from app.core.model_manager import ModelManager
@@ -21,6 +22,8 @@ async def startup_event():
     MODEL_MANAGER = ModelManager()
     ModelHandler.MODEL_MANAGER.initialize_model(
         keras_model_path=Paths.BEST_CNN_PATH,
+        sam_checkpoint_path=Paths.SAM_WEIGHTS,
+        sam_model_type=Config.SAM_TYPE_VIT_B
     )
     logging.info("Models initialized successfully.")
 
@@ -45,14 +48,17 @@ async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = Fil
     """
     Upload a file, process it in the background, and return a response immediately.
     """
-    os.makedirs(Paths.UPLOADS_RAW, exist_ok=True)
+
 
     try:
-        # This line has been commented out to avoid saving the file to disk. 
-        # with open(f"{Paths.UPLOADS_RAW}/{file.filename}", "wb") as buffer:
-        #     buffer.write(await file.read())
+
+        logging.info(f"Received file: {file.filename}")
+        with open(f"{Paths.UPLOADS_RAW}\{file.filename}", "wb") as buffer:
+ 
+            buffer.write(file.file.read())
+            logging.info(f"File {file.filename} saved to {Paths.UPLOADS_RAW}/{file.filename}")
         
-        logging.info(f"File {file.filename} uploaded successfully")
+        
 
         background_tasks.add_task(process_image_to_result, file.filename)
         
