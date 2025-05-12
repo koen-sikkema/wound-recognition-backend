@@ -3,7 +3,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 from app.core.constants import Config, ModelHandler
 
-def model_predict(image: np.ndarray, filename: str) -> str:
+def model_predict(image: np.ndarray) -> str:
     """ 
     Predict the class of the image using the pre-trained model.
     """

@@ -45,16 +45,12 @@ async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = Fil
     """
     Upload a file, process it in the background, and return a response immediately.
     """
-    os.makedirs(Paths.UPLOADS_RAW, exist_ok=True)
 
     try:
-        # This line has been commented out to avoid saving the file to disk. 
-        # with open(f"{Paths.UPLOADS_RAW}/{file.filename}", "wb") as buffer:
-        #     buffer.write(await file.read())
-        
-        logging.info(f"File {file.filename} uploaded successfully")
 
-        background_tasks.add_task(process_image_to_result, file.filename)
+        logging.info(f"File {file.filename} uploaded successfully")
+        image_bytes = await file.read()
+        background_tasks.add_task(process_image_to_result, image_bytes, file.filename)
         
         # give status code 200 to indicate success
         return JSONResponse(content={"message": "File uploaded successfully, processing in background"}, status_code=200)
