@@ -35,7 +35,9 @@ class Config:
  
 
 class ModelHandler:
-    '''seperate class for model manager'''
+    '''
+    seperate class for model manager
+    '''
     
     from app.core.model_manager                 import ModelManager
     MODEL_MANAGER = ModelManager()

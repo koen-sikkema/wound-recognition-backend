@@ -23,6 +23,6 @@ class ModelManager:
         """
         Loads a TensorFlow Keras model from the given file path.
         """
-        print("loading best cnn...")
+        print("loading cnn...")
         return tf.keras.models.load_model(Paths.BEST_CNN_PATH, compile=False)
 
