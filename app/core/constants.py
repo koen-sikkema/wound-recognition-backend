@@ -5,13 +5,6 @@ from fastapi                                import Depends
 from tensorflow.keras.models                import load_model
 import pandas as pd
 
-# def get_db():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#     finally:
-#         db.close()
-
 def get_prediction_labels():
     pandas_df = pd.read_csv(Paths.LABELS_CSV_NL)
     return pandas_df["Class"].tolist()
@@ -43,7 +36,7 @@ class Config:
 
 class ModelHandler:
     '''seperate class for model manager'''
-    # Import here to avoid circular import issues
+    
     from app.core.model_manager                 import ModelManager
     MODEL_MANAGER = ModelManager()
 
