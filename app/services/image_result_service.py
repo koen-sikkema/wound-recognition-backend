@@ -11,11 +11,8 @@ def process_image_to_result(image_bytes, filename):
     It loads the image, preprocesses it, and predicts the class using the model.
     """
     try:
-       
-  
         preprocessed_image, img = preprocess_image(image_bytes, Config.PREPROCESS_SIZE, filename) 
 
-        # predict 
         predicted_class, confidence_score = model_predict(preprocessed_image)
         store_result(filename, predicted_class, confidence_score)
         print(f"Predicted class: {predicted_class}, Confidence score: {confidence_score}")

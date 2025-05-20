@@ -1,29 +1,34 @@
 
 import logging
-import os
-from app.schemas.prediction import PredictionResult
-from app.services.image_result_service import process_image_to_result
 from app.core.model_manager import ModelManager
 from app.core.store_result      import get_result
 from app.core.constants         import Paths,  Config, ModelHandler
 from fastapi                    import FastAPI, BackgroundTasks, UploadFile, File 
 from fastapi.middleware.cors    import CORSMiddleware
 from fastapi.responses          import JSONResponse
+from database import Base, engine
+from app.routers import prediction_router, upload_router
 
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
+app.include_router(prediction_router.router)
+app.include_router(upload_router.router)
+app.include_router(upload_router.router)
 
 @app.on_event("startup")
 async def startup_event():
     """ Load models during app startup """
-
+    
+    logging.info("Creatin database if non-existent...")
+    Base.metadata.create_all(bind=engine)
+    logging.info("Loading models...")
     MODEL_MANAGER = ModelManager()
     ModelHandler.MODEL_MANAGER.initialize_model(
         keras_model_path=Paths.BEST_CNN_PATH,
     )
     logging.info("Models initialized successfully.")
-
 
 logging.basicConfig(level=logging.INFO)
 origins = ["*"]
@@ -40,31 +45,7 @@ app.add_middleware(
 def read_root():
     return {"message": "Welkom bij de wondherkenningsapp!"}
 
-@app.post("/upload/")
-async def upload_image(background_tasks: BackgroundTasks, file: UploadFile = File(...), ):
-    """
-    Upload a file, process it in the background, and return a response immediately.
-    """
 
-    try:
-
-        logging.info(f"File {file.filename} uploaded successfully")
-        image_bytes = await file.read()
-        background_tasks.add_task(process_image_to_result, image_bytes, file.filename)
-        
-        # give status code 200 to indicate success
-        return JSONResponse(content={"message": "File uploaded successfully, processing in background"}, status_code=200)
-    
-    except Exception as e:
-        logging.error(f"Error uploading file: {e}", exc_info=True)
-        return JSONResponse(content={"message": "Upload failed", "error": str(e)}, status_code=500)
-
-@app.get("/predict/", response_model=PredictionResult, responses={202: {"description": "Result not yet available"}})
-async def get_result_route(filename: str):
-    result = get_result(filename)
-    if result:
-        return result
-    return JSONResponse(status_code=202, content={"message": "Result not yet available"})
 
 
 

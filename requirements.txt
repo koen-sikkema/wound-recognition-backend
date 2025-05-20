@@ -11,9 +11,9 @@ sqlalchemy.orm==1.2.10
 python-dotenv
 aiomysql
 python-multipart==0.0.5
-git+https://github.com/facebookresearch/segment-anything.git
 opencv-python
 pandas
+sqlalchemy
 
 
 

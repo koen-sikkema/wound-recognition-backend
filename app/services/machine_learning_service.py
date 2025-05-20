@@ -15,6 +15,6 @@ def model_predict(image: np.ndarray) -> str:
     confidence_score = np.max(pred, axis=1)[0]
 
     return predicted_class, confidence_score
-    # Return the class index with the highest probability and the confidence score
+
 
  

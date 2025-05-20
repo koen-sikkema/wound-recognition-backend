@@ -1,6 +1,6 @@
 
 from typing import Optional, Dict
-from app.schemas.prediction import PredictionResult
+from app.schemas.prediction_result import PredictionResult
 
 
 results: Dict[str, PredictionResult] = {}
