@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from models.prediction import Prediction
-from schemas.prediction import PredictionCreate
+from app.core.models.prediction import Prediction
+from app.schemas.prediction import PredictionCreate
 from base64 import b64encode
 
 

@@ -6,7 +6,7 @@ from app.core.constants         import Paths,  Config
 from fastapi                    import FastAPI, BackgroundTasks, UploadFile, File 
 from fastapi.middleware.cors    import CORSMiddleware
 from fastapi.responses          import JSONResponse
-from database import Base, engine
+from app.database import Base, engine
 from app.routers import prediction_router, upload_router
 
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from core.dependencies import get_db
+from app.core.dependencies import get_db
 from typing import List
 
 from app.services.database_dervice.prediction_service import (

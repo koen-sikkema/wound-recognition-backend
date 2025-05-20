@@ -1,7 +1,8 @@
 
 from tensorflow.keras.models import load_model  
 import numpy as np
-from app.core.constants import Config, ModelHandler
+from app.core.constants import Config
+from app.core.model.model_handler import ModelHandler
 
 def model_predict(image: np.ndarray) -> str:
     """ 
