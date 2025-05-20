@@ -34,13 +34,6 @@ class Config:
     SAM_TYPE_VIT_B = "vit_b"
  
 
-class ModelHandler:
-    '''
-    seperate class for model manager
-    '''
-    
-    from app.core.model_manager                 import ModelManager
-    MODEL_MANAGER = ModelManager()
 
 
 
