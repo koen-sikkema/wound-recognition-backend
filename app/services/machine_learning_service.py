@@ -9,7 +9,8 @@ def model_predict(image: np.ndarray):
     pred = model_manager.predict(image)
     
     predicted_idx = np.argmax(pred, axis=1)[0]
-    predicted_class = Config.get_labels[predicted_idx]
+    labels = Config.get_labels()
+    predicted_class = labels[predicted_idx]
     confidence_score = np.max(pred, axis=1)[0]
 
     return predicted_class, confidence_score

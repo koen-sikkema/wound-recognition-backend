@@ -11,12 +11,13 @@ from app.crud.prediction_crud import (
 
 router = APIRouter(prefix="/predictions", tags=["Prediction history"])
 
-@router.get("/", response_model=List[AllPredictionsResponse])
+@router.get("/", response_model=AllPredictionsResponse)
 def read_all_predictions(db: Session = Depends(get_db)):
     """
     Get all predictions from the database.
     """
-    return get_all_predictions(db)
+    predictions = get_all_predictions(db)
+    return {"predictions": predictions} 
 
 @router.delete("/")
 def delete_all_predictions_route(db: Session = Depends(get_db)):

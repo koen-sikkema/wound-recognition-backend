@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.core.database_models.prediction import Prediction
-from app.utils.utils import to_dict
+from app.utils.encoding import to_dict
 
 def save_prediction(
     db: Session,

@@ -35,5 +35,5 @@ class ModelManager:
         """
         if not self._initialized:
             raise RuntimeError("Model not initialized")
-        pred = self.model.predict(image)
+        pred = self.best_cnn.predict(image)
         return pred
