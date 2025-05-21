@@ -1,8 +1,5 @@
 
-from sqlalchemy.orm                         import Session
 from pathlib                                import Path
-from fastapi                                import Depends
-from tensorflow.keras.models                import load_model
 import pandas as pd
 
 def get_prediction_labels():

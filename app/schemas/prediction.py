@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel 
 from typing import List
 from typing import Optional
 
@@ -7,7 +7,7 @@ class PredictionCreate(BaseModel):
     label: str
     confidence: float
     woundImage: bytes
-    preproWoundImage: bytes 
+
 
 class PredictionRead(PredictionCreate):
     id: int
@@ -19,8 +19,7 @@ class PredictionStorageResponse(BaseModel):
     filename: str
     label: str
     confidence: float
-    woundImage: Optional[str]
-    preproWoundImage: Optional[str]
+    woundImage: bytes
 
 class AllPredictionsResponse(BaseModel):
     predictions: List[PredictionStorageResponse]

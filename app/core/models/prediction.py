@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, LargeBinary, Float
-from app.database import Base
+from app.services.database_service.database import Base
 
 class Prediction(Base):
     __tablename__ = "predictions"
@@ -9,4 +9,3 @@ class Prediction(Base):
     confidence = Column(Float, unique=False)
     label = Column(String, unique=False)
     woundImage = Column(LargeBinary, unique=False)
-    preproWoundImage = Column(LargeBinary, unique=False)
