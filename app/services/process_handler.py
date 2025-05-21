@@ -1,9 +1,9 @@
 
 from app.services.preprocess_service import  preprocess_image
-from app.core.store_result import store_result
+from app.services.cache_service import store_result
 from app.core.constants import  Config
 from app.services.machine_learning_service import model_predict
-from app.services.database_service.prediction_service import save_prediction
+from app.crud.prediction_crud import save_prediction
 import logging
 
 def process_image_to_result(image_bytes, filename, db):

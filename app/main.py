@@ -1,25 +1,27 @@
 
 import logging
-from app.core.model.model_handler     import ModelHandler
 from app.core.constants         import Paths
 from fastapi                    import FastAPI
 from fastapi.middleware.cors    import CORSMiddleware
-from app.services.database_service.database import Base, engine
-from app.routers import prediction_router, upload_router, predict_router
+from app.database.database import Base, engine
+from app.routers import history_router, result_router, upload_router
+from app.core.ml_manager.model_manager import ModelManager
+
 
 app = FastAPI()
-app.include_router(prediction_router.router)
+app.include_router(history_router.router)
 app.include_router(upload_router.router)
-app.include_router(predict_router.router)
+app.include_router(result_router.router)
 
 @app.on_event("startup")
 async def startup_event():
     """Load database and models during app startup."""
+
     logging.info("Creating database if non-existent...")
     Base.metadata.create_all(bind=engine)
-    
+    model_manager = ModelManager()
     logging.info("Loading models...")
-    ModelHandler.MODEL_MANAGER.initialize_model()
+    model_manager.initialize_model()
     
     logging.info("Models initialized successfully.")
 

@@ -1,15 +1,13 @@
 from sqlalchemy.orm import Session
-from app.core.models.prediction import Prediction
-from app.schemas.prediction import PredictionCreate
-from base64 import b64encode
-
+from app.core.database_models.prediction import Prediction
+from app.utils.utils import to_dict
 
 def save_prediction(
-    db,
-    filename,
-    label,
-    confidence,
-    wound_image,
+    db: Session,
+    filename: str,
+    label: str,
+    confidence: float,
+    wound_image: bytes,
 ):
     prediction = Prediction(
         filename=filename,
@@ -41,16 +39,6 @@ def delete_all_predictions(db: Session):
 
 def get_all_predictions(db: Session):
     predictions = db.query(Prediction).all()
-
-    def to_dict(p):
-        return {
-            "id": p.id,
-            "filename": p.filename,
-            "label": p.label,
-            "confidence": p.confidence,
-            "woundImage": b64encode(p.woundImage).decode("utf-8") if p.woundImage else None,
-        }
-
     return [to_dict(pred) for pred in predictions]
 
 def isConnected(db: Session):

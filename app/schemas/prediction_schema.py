@@ -9,12 +9,12 @@ class PredictionCreate(BaseModel):
     woundImage: bytes
 
 
-class PredictionRead(PredictionCreate):
+class PredictionInDB(PredictionCreate):
     id: int
     class Config:
         orm_mode = True
 
-class PredictionStorageResponse(BaseModel):
+class PredictionResponse(BaseModel):
     id: int
     filename: str
     label: str
@@ -22,4 +22,9 @@ class PredictionStorageResponse(BaseModel):
     woundImage: bytes
 
 class AllPredictionsResponse(BaseModel):
-    predictions: List[PredictionStorageResponse]
+    predictions: List[PredictionResponse]
+
+class CashedPrediction(BaseModel):
+    filename: str
+    label: str
+    confidence: float

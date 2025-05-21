@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, LargeBinary, Float
-from app.services.database_service.database import Base
+from app.database.database import Base
 
 class Prediction(Base):
     __tablename__ = "predictions"

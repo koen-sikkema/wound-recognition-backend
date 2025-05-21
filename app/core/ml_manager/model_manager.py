@@ -1,5 +1,6 @@
 
 import tensorflow as tf
+import numpy as np
 from app.core.constants import Paths
 
 class ModelManager:
@@ -25,4 +26,14 @@ class ModelManager:
         """Load the Keras model from the specified path."""
         
         return tf.keras.models.load_model(Paths.BEST_CNN_PATH, compile=False)
-
+    
+    def predict(self, image: np.ndarray):
+        """
+        Predict the class of the image using the pre-trained model.
+        Args:
+            image (np.ndarray): Preprocessed image ready for model input.
+        """
+        if not self._initialized:
+            raise RuntimeError("Model not initialized")
+        pred = self.model.predict(image)
+        return pred
