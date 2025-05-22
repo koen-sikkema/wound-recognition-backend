@@ -24,7 +24,7 @@ class PredictionResponse(BaseModel):
 class AllPredictionsResponse(BaseModel):
     predictions: List[PredictionResponse]
 
-class CashedPrediction(BaseModel):
+class CachedPrediction(BaseModel):
     filename: str
     label: str
     confidence: float
