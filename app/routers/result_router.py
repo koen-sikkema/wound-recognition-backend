@@ -1,12 +1,12 @@
 
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from app.schemas.prediction_schema import CashedPrediction
+from app.schemas.prediction_schema import CachedPrediction
 from app.services.prediction_service.cache_handler import get_cached_prediction
 
 router = APIRouter(prefix="/results", tags=["predict"])
 
-@router.get("/", response_model=CashedPrediction, responses={202: {"description": "Result not yet available"}})
+@router.get("/", response_model=CachedPrediction, responses={202: {"description": "Result not yet available"}})
 async def get_result_route(filename: str):
     """Get the prediction result for a given filename.
     Args:

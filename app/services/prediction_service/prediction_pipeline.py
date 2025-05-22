@@ -17,7 +17,7 @@ def run_prediction_pipline(image_bytes: bytes, filename: str, db: Session):
         db: The database session.
     """
     try:
-        preprocessed_image, image_bytes = preprocess_image(image_bytes, Config.PREPROCESS_SIZE, filename) 
+        preprocessed_image, image_bytes = preprocess_image(image_bytes, Config.PREPROCESS_SIZE) 
 
         predicted_class, confidence_score = model_predict(preprocessed_image)
         cache_prediction(filename, predicted_class, confidence_score)

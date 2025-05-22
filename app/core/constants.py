@@ -29,23 +29,13 @@ class Config:
     A class to hold configuration constants.
     """
     PREPROCESS_SIZE = (128, 128)
-    
     _labels = None
 
     @classmethod
     def get_labels(cls):
+        """
+        Returns the labels for the model, if not loaded, loads from the CSV (app/ml_assets/labels_cnn_nl.csv).
+        """
         if cls._labels is None:
             cls._labels = get_prediction_labels()
         return cls._labels
-
- 
-
-
-
-
-
-
-
-
-    
-

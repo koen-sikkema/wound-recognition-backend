@@ -10,24 +10,25 @@ class ModelManager:
     """
     _instance = None # Singleton instance
 
-    def __new__(cls):
+    def __new__(cls) -> "ModelManager":
+        """Create a new instance of ModelManager if it doesn't exist."""
         if cls._instance is None:
             cls._instance = super(ModelManager, cls).__new__(cls)
             cls._instance._initialized = False
         return cls._instance
     
-    def initialize_model(self, ):
+    def initialize_model(self) -> None:
         """Initialize the model manager."""
         if not self._initialized:
             self.best_cnn = self.load_keras_model()
             self._initialized = True
             
-    def load_keras_model(self):
+    def load_keras_model(self) -> tf.keras.Model:
         """Load the Keras model from the specified path."""
         
         return tf.keras.models.load_model(Paths.BEST_CNN_PATH, compile=False)
     
-    def predict(self, image: np.ndarray):
+    def predict(self, image: np.ndarray) -> np.ndarray:
         """
         Predict the class of the image using the pre-trained model.
         Args:
@@ -39,5 +40,6 @@ class ModelManager:
         return pred
     
     @classmethod
-    def get_instance(cls):
+    def get_instance(cls) -> "ModelManager":
+        """Get the singleton instance of ModelManager."""
         return cls()
