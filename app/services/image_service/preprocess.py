@@ -7,7 +7,7 @@ import tensorflow as tf
 from PIL import Image
 from app.core.constants import Paths  # of pas dit aan naar je eigen structuur
 
-def preprocess_image(image_bytes, target_size, filename):
+def preprocess_image(image_bytes, target_size):
     """
     Preprocess the image for the model and save the preprocessed image.
     
@@ -21,7 +21,6 @@ def preprocess_image(image_bytes, target_size, filename):
     """
 
     image = load_img(BytesIO(image_bytes), target_size=target_size)
-    img_array = tf.keras.preprocessing.image.img_to_array(image)
-    img_array = img_array / 255.0
+    img_array = tf.keras.preprocessing.image.img_to_array(image) /255.0
 
     return np.expand_dims(img_array, axis=0), image_bytes

@@ -2,7 +2,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from app.schemas.prediction_schema import CashedPrediction
-from app.services.cache_service import get_result
+from app.services.prediction_service.cache_handler import get_cached_prediction
 
 router = APIRouter(prefix="/results", tags=["predict"])
 
@@ -14,7 +14,7 @@ async def get_result_route(filename: str):
     Returns:
         PredictionResult: The prediction result for the given filename.
     """
-    result = get_result(filename)
+    result = get_cached_prediction(filename)
     if result:
         return result
     return JSONResponse(status_code=202, content={"message": "Result not yet available"})

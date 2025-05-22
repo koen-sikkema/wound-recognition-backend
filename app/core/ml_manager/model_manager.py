@@ -37,3 +37,7 @@ class ModelManager:
             raise RuntimeError("Model not initialized")
         pred = self.best_cnn.predict(image)
         return pred
+    
+    @classmethod
+    def get_instance(cls):
+        return cls()
