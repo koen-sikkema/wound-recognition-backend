@@ -19,7 +19,6 @@ def cache_prediction(filename: str, label: str, score: float):
         confidence = score,
     )
 
-
 def get_cached_prediction(filename: str) -> Optional[CachedPrediction]:
     """
     getter for predictionresult on filename

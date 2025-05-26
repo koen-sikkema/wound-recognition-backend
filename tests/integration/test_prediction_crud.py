@@ -1,13 +1,11 @@
-from app.services.prediction_service import (
+from app.crud.prediction_crud import (
     save_prediction,
     get_prediction,
     delete_prediction,
     delete_all_predictions,
     get_all_predictions,
-    isConnected,
 )
 from app.core.database_models.prediction import Prediction
-
 
 def test_save_and_get_prediction(test_db):
     """

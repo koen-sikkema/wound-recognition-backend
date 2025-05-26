@@ -17,4 +17,5 @@ async def get_result_route(filename: str):
     result = get_cached_prediction(filename)
     if result:
         return result
+    
     return JSONResponse(status_code=202, content={"message": "Result not yet available"})

@@ -16,7 +16,7 @@ def preprocess_image(image_bytes, target_size):
         target_size (tuple): Target size for resizing the image.
     
     Returns:
-        np.ndarray: Preprocessed image ready for model input.
+        np.ndarray: Preprocessed image   ready for model input.
         PIL.Image: The original resized image.
     """
 

@@ -6,24 +6,30 @@ from fastapi.middleware.cors    import CORSMiddleware
 from app.database.database import Base, engine
 from app.routers import history_router, result_router, upload_router
 from app.core.ml_manager.model_manager import ModelManager
+from contextlib import asynccontextmanager
 
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Startup and shutdown logic."""
+    logging.info("Creating database if non-existent...")
+    Base.metadata.create_all(bind=engine)
+
+    logging.info("Loading models...")
+    model_manager = ModelManager()
+    model_manager.initialize_model()
+    logging.info("Models initialized successfully.")
+
+    yield  
+
+    logging.info("Shutting down...")
+
+
+app = FastAPI(lifespan=lifespan, title="Wondherkenningsapp API", description="API voor wondherkenning met machine learning", version="1.0.0")
 app.include_router(history_router.router)
 app.include_router(upload_router.router)
 app.include_router(result_router.router)
-
-@app.on_event("startup")
-async def startup_event():
-    """Load database and models during app startup."""
-
-    logging.info("Creating database if non-existent...")
-    Base.metadata.create_all(bind=engine)
-    model_manager = ModelManager()
-    logging.info("Loading models...")
-    model_manager.initialize_model()
-    
-    logging.info("Models initialized successfully.")
 
 
 logging.basicConfig(level=logging.INFO)
