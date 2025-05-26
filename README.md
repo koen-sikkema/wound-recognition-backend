@@ -1,4 +1,4 @@
-# Wound Recognition Backend
+#  🩺  Wound Recognition Backend
 
 This repository contains the backend for a wound recognition application using machine learning.
 
@@ -6,7 +6,7 @@ This repository contains the backend for a wound recognition application using m
 
 This backend service handles image uploads, processes images through a machine learning model, stores prediction results, and provides API endpoints to interact with these functionalities.
 
-## Features
+## 📦 Features
 
 - Upload wound images for prediction
 - Process images with a TensorFlow/Keras ML model
@@ -15,7 +15,7 @@ This backend service handles image uploads, processes images through a machine l
 - Designed with a service-based architecture
 - Includes unit and integration tests
 
-## Requirements
+##  🚀 Requirements
 
 - Python 3.9+
 - FastAPI
@@ -52,12 +52,12 @@ This backend service handles image uploads, processes images through a machine l
 
 The API is now accessible at http://127.0.0.1:8000, with interactive documentation available at http://127.0.0.1:8000/docs.
 
-## Testing
+## 🧪 Testing
    ```bash 
    pytest -v
    ``` 
 
-## Project structure
+## 🛠️ Project structure
 ```py
 wound-recognition-backend/
 ├── app/
@@ -112,6 +112,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-👤 Author
 👤 **Author**: Koen Sikkema  
-🧑‍🏫 **Supervised by**: [Full Name], on behalf of [**Health Hub Roden**](https://www.health-hub.eu/home)
+🧑‍🏫 **Supervised by**: Egbert Wiltens, on behalf of [**Health Hub Roden**](https://www.health-hub.eu/home)
