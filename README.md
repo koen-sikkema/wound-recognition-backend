@@ -64,9 +64,10 @@ wound-recognition-backend/
 │   ├── core/          # Configurations and utilities
 │   ├── crud/          # Database operations
 │   ├── database/      # Database initialization
-│   ├── ml_manager/    # Machine learning model management
+│   ├── ml_assets/     # Machine learning model management
 │   ├── routers/       # API routes
 │   ├── schemas/       # Pydantic schemas
+│   ├── utils/
 │   └── main.py        # Application entry point
 ├── tests/             # Unit and integration tests
 ├── requirements.txt   # Python dependencies
@@ -86,7 +87,7 @@ wound-recognition-backend/
 
 This license applies to the Machine learning-model: best_cnn.h5 
 
-Enormously gratefull to [Fahim Ahamed!] (https://github.com/f-a-tonmoy/Wound-Classification-DL?tab=readme-ov-file)
+Enormously gratefull to [Fahim Ahamed!](https://github.com/f-a-tonmoy/Wound-Classification-DL?tab=readme-ov-file)
 
 
 MIT License
@@ -112,4 +113,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 👤 Author
-Koen Sikkema - Under the supervision of Egbert Wiltens in name of [Health-Hub Roden](https://www.health-hub.eu/)
+👤 **Author**: Koen Sikkema  
+🧑‍🏫 **Supervised by**: [Full Name], on behalf of [**Health Hub Roden**](https://www.health-hub.eu/home)
