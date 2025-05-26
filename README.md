@@ -58,6 +58,7 @@ The API is now accessible at http://127.0.0.1:8000, with interactive documentati
    ``` 
 
 ## Project structure
+```py
 wound-recognition-backend/
 ├── app/
 │   ├── core/          # Configurations and utilities
@@ -70,7 +71,7 @@ wound-recognition-backend/
 ├── tests/             # Unit and integration tests
 ├── requirements.txt   # Python dependencies
 └── README.md          # Project documentation
-
+```
 ## 📄 API Endpoints
 
 *  POST /upload/ - Upload a wound image.
