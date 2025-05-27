@@ -47,7 +47,8 @@ This backend service handles image uploads, processes images through a machine l
 
 4. **Start the server:**
    ```bash
-   uvicorn app.main:app --reload
+   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
    ```
 
 The API is now accessible at http://127.0.0.1:8000, with interactive documentation available at http://127.0.0.1:8000/docs.
