@@ -5,7 +5,7 @@ from io import BytesIO
 import tensorflow as tf
 
 from PIL import Image
-from app.core.constants import Paths  # of pas dit aan naar je eigen structuur
+from app.core.constants import Paths 
 
 def preprocess_image(image_bytes, target_size):
     """

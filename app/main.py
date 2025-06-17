@@ -3,10 +3,10 @@ import logging
 from app.core.constants         import Paths
 from fastapi                    import FastAPI
 from fastapi.middleware.cors    import CORSMiddleware
-from app.database.database import Base, engine
-from app.routers import history_router, result_router, upload_router
+from app.database.database      import Base, engine
+from app.routers                import history_router, result_router, upload_router
 from app.core.ml_manager.model_manager import ModelManager
-from contextlib import asynccontextmanager
+from contextlib                 import asynccontextmanager
 
 
 
@@ -20,13 +20,12 @@ async def lifespan(app: FastAPI):
     model_manager = ModelManager()
     model_manager.initialize_model()
     logging.info("Models initialized successfully.")
-
     yield  
-
     logging.info("Shutting down...")
 
 
 app = FastAPI(lifespan=lifespan, title="Wondherkenningsapp API", description="API voor wondherkenning met machine learning", version="1.0.0")
+
 app.include_router(history_router.router)
 app.include_router(upload_router.router)
 app.include_router(result_router.router)

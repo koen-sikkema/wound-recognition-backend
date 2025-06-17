@@ -12,7 +12,6 @@ def get_prediction_labels():
     return pandas_df["Class"].tolist()
 
 
-
 class Paths:
     """
     A class to hold paths used in the application.

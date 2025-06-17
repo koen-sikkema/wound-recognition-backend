@@ -8,7 +8,6 @@ class PredictionCreate(BaseModel):
     confidence: float
     woundImage: bytes
 
-
 class PredictionInDB(PredictionCreate):
     id: int
     class Config:
