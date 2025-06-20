@@ -33,7 +33,7 @@ def test_initialize_model_already_initialized():
     ModelManager._instance = None
     with patch.object(ModelManager, 'load_keras_model') as mock_load:
         manager = ModelManager.get_instance()
-        manager._initialized = True  # Simuleer dat model al geladen is
+        manager._initialized = True  # Simulate that the model is already initialized
         manager.initialize_model()
 
         mock_load.assert_not_called()
