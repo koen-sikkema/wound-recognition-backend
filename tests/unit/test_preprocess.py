@@ -12,7 +12,7 @@ def test_preprocess_image():
     # Create a dummy image in memory and save it to bytes
     img = Image.new('RGB', (128, 128), color='red')
     img_bytes_io = BytesIO()
-    img.save(img_bytes_io, format='JPEG')  # Gebruik JPEG of PNG
+    img.save(img_bytes_io, format='JPEG')  # use JPEG of PNG
     img_bytes = img_bytes_io.getvalue()
 
     # Call the preprocess_image function

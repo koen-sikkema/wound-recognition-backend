@@ -26,9 +26,9 @@ def dummy_image_bytes():
 
 @pytest.fixture(scope="function")
 def test_db():
-    # Maak tijdelijk bestand aan
+    # create a temporary file for the SQLite database
     tmp_file = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
-    tmp_file.close()  # Sluit zodat SQLite kan openen
+    tmp_file.close()  # close the file so it can be used by SQLAlchemy
 
     test_db_url = f"sqlite:///{tmp_file.name}"
     engine = create_engine(test_db_url, connect_args={"check_same_thread": False})
@@ -41,11 +41,11 @@ def test_db():
         yield db
     finally:
         db.close()
-        # Drop tables voor netheid (optioneel)
+        # drop the database tables and close the engine
         Base.metadata.drop_all(bind=engine)
-        engine.dispose()  # Sluit alle connecties en resources
+        engine.dispose()  # close the engine
 
-        # Verwijder het bestand nadat engine gesloten is
+        # remove the temporary file
         os.unlink(tmp_file.name)
 
 @pytest.fixture(scope="function")
